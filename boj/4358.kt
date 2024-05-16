@@ -23,23 +23,13 @@ fun main() {
 
     br.close()
 
-    val result = mutableListOf<Item>()
+    // 각 종의 이름을 사전순 정렬
+    val result = species.keys.sorted()
 
-    for ((k, v) in species) {
-        result.add(Item(k, v / count * 100))
-    }
-
-    // 각 종의 이름에 따라 사전순 정렬
-    result.sortBy { it.specie }
-    println(result.joinToString("\n"))
-}
-
-private data class Item(
-    val specie: String,
-    val percentage: Float
-) {
-    override fun toString(): String {
-        // 각 종의 이름과 비율을 소수점 4번째자리까지 반올림한 값
-        return "$specie ${String.format("%.4f", percentage)}"
-    }
+    println(
+        result.joinToString("\n") {
+            // 각 종의 이름과 각 종의 비율을 소수점 4번째자리까지 반올림한 값
+            "$it ${String.format("%.4f", (species[it] ?: 0) / count * 100)}"
+        }
+    )
 }
